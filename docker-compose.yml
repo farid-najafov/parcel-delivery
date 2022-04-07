@@ -1,0 +1,63 @@
+version: '3.9'
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=my-secret-pw
+      - POSTGRES_DB=parcel-delivery
+    ports:
+      - '5432:5432'
+
+  discovery-service:
+    container_name: discovery-service
+    image: discovery-service
+    build:
+      context: discovery-service
+      dockerfile: ./discovery-service/Dockerfile
+    ports:
+      - "8761:8761"
+    depends_on:
+      - postgres
+
+  api-gateway:
+    container_name: api-gateway
+    image: api-gateway
+    build:
+      context: api-gateway
+      dockerfile: ./api-gateway/Dockerfile
+    ports:
+      - "8090:8090"
+    depends_on:
+      - postgres
+      - discovery-service
+
+  auth-service:
+    container_name: auth-service
+    image: auth-service
+    build:
+      context: auth-service
+      dockerfile: ./auth-service/Dockerfile
+    ports:
+      - "8070:8070"
+    depends_on:
+      - postgres
+      - discovery-service
+      - api-gateway
+
+  delivery-service:
+    container_name: delivery-service
+    image: delivery-service
+    build:
+      context: delivery-service
+      dockerfile: ./delivery-service/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - discovery-service
+      - api-gateway
+      - auth-service

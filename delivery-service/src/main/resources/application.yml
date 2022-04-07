@@ -1,0 +1,41 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /delivery-service
+
+spring:
+  application:
+    name: delivery-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/parcel-delivery
+    username: postgres
+    password: my-secret-pw
+    initialization-mode: always
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    properties:
+      hibernate:
+        default_schema: parcel-delivery
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    open-in-view: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  liquibase:
+    enabled: true
+    change-log: classpath:/liquibase/changelog-master.yml
+    drop-first: false
+    default-schema: parcel-delivery
+    database-change-log-table: PARCEL_DELIVERY_DBCHANGELOG
+    database-change-log-lock-table: PARCEL_DELIVERY_DBCHANGELOGLOCK
+
+eureka:
+  client:
+    service-url:
+      default-zone: http://discovery-sevice:8761/eureka/
+
+jwt:
+  secret: c3VwZXJzZWNyZXRqd3QK

@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - changeSet:
+      id: Create users table
+      author: Farid Najafov
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  name: id
+                  type: varchar(100)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: full_name
+                  type: varchar(100)
+              - column:
+                  name: email
+                  type: varchar(100)
+              - column:
+                  name: encrypted_password
+                  type: varchar(500)
+              - column:
+                  name: roles
+                  type: varchar(100)
+            schemaName: parcel_delivery
+            tableName: users
+
+  - changeSet:
+      id: Insert data
+      author: Farid Najafov
+      changes:
+        - sql:
+            sql: insert into users (id, full_name, email, encrypted_password, roles) values ("64e44f4f-dd30-4909-a2cf-22938cf40b2f", "Jim P", "admin@delivery.com", "$2a$12$jdfZ3PtcFBeVSN77pJxbIOFSU2ujWuVk2xdubZpYy8bwYWG52w4ge", "ADMIN")
+        - sql:
+            sql: insert into users (id, full_name, email, encrypted_password, roles) values ("8ceda07e-1df4-4ddc-928f-98cf456abb5e", "John A", "customer@delivery.com", "$2a$12$DiQt6uH5XWlM56PCUFAYwusEAk1gZfkzDU0GCc0.wr0dMvgrFthre", "CUSTOMER")
+        - sql:
+            sql: insert into users (id, full_name, email, encrypted_password, roles) values ("20f2e8f3-d62e-4e34-9429-7358315d21fa", "Jack J", "courier@delivery.com", "$2a$12$XMw7u3ZJJB7dIvxHLV/lLuvSE1ItCC/IZXLWu32M88QmDKsSWb7iW", "COURIER")
+

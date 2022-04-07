@@ -1,0 +1,30 @@
+server:
+  port: 8070
+  servlet:
+    context-path: /auth
+
+spring:
+  application:
+    name: auth-service
+
+  datasource:
+    url: jdbc:postgresql://postgres:5432/parcel-delivery
+    username: postgres
+    password: my-secret-pw
+    initialization-mode: always
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    properties:
+      hibernate:
+        default_schema: parcel-delivery
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    open-in-view: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+eureka:
+  client:
+    service-url:
+      default-zone: http://discovery-sevice:8761/eureka/
